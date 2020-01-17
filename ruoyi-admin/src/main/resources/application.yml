@@ -16,7 +16,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为80
-  port: 80
+  port: 8080
   servlet:
     # 应用的访问路径
     context-path: /
@@ -27,6 +27,13 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
+    
+  ssl: #添加的ssl自签名证书
+    key-store: classpath:tomcat.keystore #注意路径要配置正确
+    key-store-password: facepay
+    
+http: # 新加一个http的端口号配置
+  port: 80    
  
 # 日志配置
 logging:
