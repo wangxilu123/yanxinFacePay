@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AgentUserMapper">
+  <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.AgentUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="agent_name" jdbcType="VARCHAR" property="agentName" />
+    <result column="is_signing" jdbcType="INTEGER" property="isSigning" />
+    <result column="cooperation_type" jdbcType="INTEGER" property="cooperationType" />
+    <result column="separate_proportion" jdbcType="DOUBLE" property="separateProportion" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="is_effective" jdbcType="INTEGER" property="isEffective" />
+    <result column="withdrawal_bank" jdbcType="VARCHAR" property="withdrawalBank" />
+    <result column="cardholder" jdbcType="VARCHAR" property="cardholder" />
+    <result column="id_number" jdbcType="VARCHAR" property="idNumber" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="county" jdbcType="VARCHAR" property="county" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+     <result column="card_number" jdbcType="VARCHAR" property="cardNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, agent_name, is_signing, cooperation_type, separate_proportion, contacts, phone, 
+    address, is_effective, withdrawal_bank, cardholder, id_number, province, city, county, 
+    create_by, create_time,card_number
+  </sql>
+  <select id="selectByExample" parameterType="com.ruoyi.system.domain.AgentUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from agent_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from agent_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from agent_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ruoyi.system.domain.AgentUserExample">
+    delete from agent_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.AgentUser" useGeneratedKeys="true">
+    insert into agent_user (agent_name, is_signing, cooperation_type, 
+      separate_proportion, contacts, phone, 
+      address, is_effective, withdrawal_bank, 
+      cardholder, id_number, province, 
+      city, county, create_by, 
+      create_time,card_number)
+    values (#{agentName,jdbcType=VARCHAR}, #{isSigning,jdbcType=INTEGER}, #{cooperationType,jdbcType=INTEGER}, 
+      #{separateProportion,jdbcType=DOUBLE}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{isEffective,jdbcType=INTEGER}, #{withdrawalBank,jdbcType=VARCHAR}, 
+      #{cardholder,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP},#{cardNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.AgentUser" useGeneratedKeys="true">
+    insert into agent_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="agentName != null">
+        agent_name,
+      </if>
+      <if test="isSigning != null">
+        is_signing,
+      </if>
+      <if test="cooperationType != null">
+        cooperation_type,
+      </if>
+      <if test="separateProportion != null">
+        separate_proportion,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="isEffective != null">
+        is_effective,
+      </if>
+      <if test="withdrawalBank != null">
+        withdrawal_bank,
+      </if>
+      <if test="cardholder != null">
+        cardholder,
+      </if>
+      <if test="idNumber != null">
+        id_number,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="county != null">
+        county,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="cardNumber != null">
+        card_number,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="agentName != null">
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSigning != null">
+        #{isSigning,jdbcType=INTEGER},
+      </if>
+      <if test="cooperationType != null">
+        #{cooperationType,jdbcType=INTEGER},
+      </if>
+      <if test="separateProportion != null">
+        #{separateProportion,jdbcType=DOUBLE},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null">
+        #{isEffective,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawalBank != null">
+        #{withdrawalBank,jdbcType=VARCHAR},
+      </if>
+      <if test="cardholder != null">
+        #{cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null">
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null">
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ruoyi.system.domain.AgentUserExample" resultType="java.lang.Long">
+    select count(*) from agent_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update agent_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.agentName != null">
+        agent_name = #{record.agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSigning != null">
+        is_signing = #{record.isSigning,jdbcType=INTEGER},
+      </if>
+      <if test="record.cooperationType != null">
+        cooperation_type = #{record.cooperationType,jdbcType=INTEGER},
+      </if>
+      <if test="record.separateProportion != null">
+        separate_proportion = #{record.separateProportion,jdbcType=DOUBLE},
+      </if>
+      <if test="record.contacts != null">
+        contacts = #{record.contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEffective != null">
+        is_effective = #{record.isEffective,jdbcType=INTEGER},
+      </if>
+      <if test="record.withdrawalBank != null">
+        withdrawal_bank = #{record.withdrawalBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardholder != null">
+        cardholder = #{record.cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null">
+        id_number = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.county != null">
+        county = #{record.county,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+        <if test="record.cardNumber != null">
+        card_number = #{record.cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update agent_user
+    set id = #{record.id,jdbcType=INTEGER},
+      agent_name = #{record.agentName,jdbcType=VARCHAR},
+      is_signing = #{record.isSigning,jdbcType=INTEGER},
+      cooperation_type = #{record.cooperationType,jdbcType=INTEGER},
+      separate_proportion = #{record.separateProportion,jdbcType=DOUBLE},
+      contacts = #{record.contacts,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      is_effective = #{record.isEffective,jdbcType=INTEGER},
+      withdrawal_bank = #{record.withdrawalBank,jdbcType=VARCHAR},
+      cardholder = #{record.cardholder,jdbcType=VARCHAR},
+      id_number = #{record.idNumber,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      county = #{record.county,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      card_number = #{record.cardNumber,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.system.domain.AgentUser">
+    update agent_user
+    <set>
+      <if test="agentName != null">
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSigning != null">
+        is_signing = #{isSigning,jdbcType=INTEGER},
+      </if>
+      <if test="cooperationType != null">
+        cooperation_type = #{cooperationType,jdbcType=INTEGER},
+      </if>
+      <if test="separateProportion != null">
+        separate_proportion = #{separateProportion,jdbcType=DOUBLE},
+      </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null">
+        is_effective = #{isEffective,jdbcType=INTEGER},
+      </if>
+      <if test="withdrawalBank != null">
+        withdrawal_bank = #{withdrawalBank,jdbcType=VARCHAR},
+      </if>
+      <if test="cardholder != null">
+        cardholder = #{cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null">
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null">
+        card_number = #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.system.domain.AgentUser">
+    update agent_user
+    set agent_name = #{agentName,jdbcType=VARCHAR},
+      is_signing = #{isSigning,jdbcType=INTEGER},
+      cooperation_type = #{cooperationType,jdbcType=INTEGER},
+      separate_proportion = #{separateProportion,jdbcType=DOUBLE},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      is_effective = #{isEffective,jdbcType=INTEGER},
+      withdrawal_bank = #{withdrawalBank,jdbcType=VARCHAR},
+      cardholder = #{cardholder,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      county = #{county,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      card_number = #{cardNumber,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+    <sql id="selectAgVo">
+        select id, agent_name, is_signing, cooperation_type, separate_proportion, contacts, phone, 
+    address, is_effective, withdrawal_bank, cardholder, id_number, province, city, county, 
+    create_by, create_time,card_number 
+		from agent_user
+    </sql>
+   <select id="selectAgentUserList" parameterType="AgentUser" resultMap="BaseResultMap">
+        <include refid="selectAgVo"/>
+        <where>
+			<if test="agentName != null and agentName != ''">
+				AND agent_name like concat('%', #{agentName}, '%')
+			</if>
+			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+		</where>
+    </select>
+</mapper>
