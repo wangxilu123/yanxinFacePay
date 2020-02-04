@@ -51,8 +51,7 @@ public class AgentUserServiceImpl implements AgentUserService
 	}
 	@Override
 	public int updateAg(AgentUser agentUser) {
-		// TODO Auto-generated method stub
-		return 0;
+		return agentUserMapper.updateByPrimaryKey(agentUser);
 	}
 	@Override
 	public AgentUser selectAgById(Long agentUserId) {

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MerchantMapper">
+  <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.Merchant">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="business_category" jdbcType="VARCHAR" property="businessCategory" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="receiving_bank" jdbcType="VARCHAR" property="receivingBank" />
+    <result column="cardholder" jdbcType="VARCHAR" property="cardholder" />
+    <result column="card_number" jdbcType="VARCHAR" property="cardNumber" />
+    <result column="business_license_url" jdbcType="VARCHAR" property="businessLicenseUrl" />
+    <result column="organization_url" jdbcType="VARCHAR" property="organizationUrl" />
+    <result column="idcard_positive_url" jdbcType="VARCHAR" property="idcardPositiveUrl" />
+    <result column="idcard_otherSide_url" jdbcType="VARCHAR" property="idcardOthersideUrl" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_name, business_category, address, mobile, contacts, phone, email, receiving_bank, 
+    cardholder, card_number, business_license_url, organization_url, idcard_positive_url, 
+    idcard_otherSide_url, create_by, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ruoyi.system.domain.MerchantExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from merchant
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ruoyi.system.domain.MerchantExample">
+    delete from merchant
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.Merchant" useGeneratedKeys="true">
+    insert into merchant (merchant_name, business_category, address, 
+      mobile, contacts, phone, 
+      email, receiving_bank, cardholder, 
+      card_number, business_license_url, organization_url, 
+      idcard_positive_url, idcard_otherSide_url, 
+      create_by, create_time)
+    values (#{merchantName,jdbcType=VARCHAR}, #{businessCategory,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{receivingBank,jdbcType=VARCHAR}, #{cardholder,jdbcType=VARCHAR}, 
+      #{cardNumber,jdbcType=VARCHAR}, #{businessLicenseUrl,jdbcType=VARCHAR}, #{organizationUrl,jdbcType=VARCHAR}, 
+      #{idcardPositiveUrl,jdbcType=VARCHAR}, #{idcardOthersideUrl,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.Merchant" useGeneratedKeys="true">
+    insert into merchant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="businessCategory != null">
+        business_category,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="receivingBank != null">
+        receiving_bank,
+      </if>
+      <if test="cardholder != null">
+        cardholder,
+      </if>
+      <if test="cardNumber != null">
+        card_number,
+      </if>
+      <if test="businessLicenseUrl != null">
+        business_license_url,
+      </if>
+      <if test="organizationUrl != null">
+        organization_url,
+      </if>
+      <if test="idcardPositiveUrl != null">
+        idcard_positive_url,
+      </if>
+      <if test="idcardOthersideUrl != null">
+        idcard_otherSide_url,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCategory != null">
+        #{businessCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingBank != null">
+        #{receivingBank,jdbcType=VARCHAR},
+      </if>
+      <if test="cardholder != null">
+        #{cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null">
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseUrl != null">
+        #{businessLicenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationUrl != null">
+        #{organizationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardPositiveUrl != null">
+        #{idcardPositiveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardOthersideUrl != null">
+        #{idcardOthersideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ruoyi.system.domain.MerchantExample" resultType="java.lang.Long">
+    select count(*) from merchant
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update merchant
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.merchantName != null">
+        merchant_name = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessCategory != null">
+        business_category = #{record.businessCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacts != null">
+        contacts = #{record.contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivingBank != null">
+        receiving_bank = #{record.receivingBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardholder != null">
+        cardholder = #{record.cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardNumber != null">
+        card_number = #{record.cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicenseUrl != null">
+        business_license_url = #{record.businessLicenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizationUrl != null">
+        organization_url = #{record.organizationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardPositiveUrl != null">
+        idcard_positive_url = #{record.idcardPositiveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardOthersideUrl != null">
+        idcard_otherSide_url = #{record.idcardOthersideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update merchant
+    set id = #{record.id,jdbcType=INTEGER},
+      merchant_name = #{record.merchantName,jdbcType=VARCHAR},
+      business_category = #{record.businessCategory,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      contacts = #{record.contacts,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      receiving_bank = #{record.receivingBank,jdbcType=VARCHAR},
+      cardholder = #{record.cardholder,jdbcType=VARCHAR},
+      card_number = #{record.cardNumber,jdbcType=VARCHAR},
+      business_license_url = #{record.businessLicenseUrl,jdbcType=VARCHAR},
+      organization_url = #{record.organizationUrl,jdbcType=VARCHAR},
+      idcard_positive_url = #{record.idcardPositiveUrl,jdbcType=VARCHAR},
+      idcard_otherSide_url = #{record.idcardOthersideUrl,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.system.domain.Merchant">
+    update merchant
+    <set>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCategory != null">
+        business_category = #{businessCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null">
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="receivingBank != null">
+        receiving_bank = #{receivingBank,jdbcType=VARCHAR},
+      </if>
+      <if test="cardholder != null">
+        cardholder = #{cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null">
+        card_number = #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenseUrl != null">
+        business_license_url = #{businessLicenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationUrl != null">
+        organization_url = #{organizationUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardPositiveUrl != null">
+        idcard_positive_url = #{idcardPositiveUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardOthersideUrl != null">
+        idcard_otherSide_url = #{idcardOthersideUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.system.domain.Merchant">
+    update merchant
+    set merchant_name = #{merchantName,jdbcType=VARCHAR},
+      business_category = #{businessCategory,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      receiving_bank = #{receivingBank,jdbcType=VARCHAR},
+      cardholder = #{cardholder,jdbcType=VARCHAR},
+      card_number = #{cardNumber,jdbcType=VARCHAR},
+      business_license_url = #{businessLicenseUrl,jdbcType=VARCHAR},
+      organization_url = #{organizationUrl,jdbcType=VARCHAR},
+      idcard_positive_url = #{idcardPositiveUrl,jdbcType=VARCHAR},
+      idcard_otherSide_url = #{idcardOthersideUrl,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <sql id="selectAgVo">
+        select id, merchant_name, business_category, address, mobile, contacts, phone, email, receiving_bank, 
+    cardholder, card_number, business_license_url, organization_url, idcard_positive_url, 
+    idcard_otherSide_url, create_by, create_time
+		from merchant
+    </sql>
+   <select id="selectMerchantList" parameterType="Merchant" resultMap="BaseResultMap">
+        <include refid="selectAgVo"/>
+        <where>
+			<if test="merchantName != null and merchantName != ''">
+				AND merchant_name like concat('%', #{merchantName}, '%')
+			</if>
+			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+		</where>
+    </select>
+</mapper>
