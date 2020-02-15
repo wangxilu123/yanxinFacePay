@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.facePay;
+package com.ruoyi.web.controller.system;
 
 import java.util.List;
 

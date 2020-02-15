@@ -23,47 +23,47 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.OSSClientUtil;
 import com.ruoyi.framework.util.ShiroUtils;
-import com.ruoyi.system.domain.Merchant;
-import com.ruoyi.system.service.MerchantService;
+import com.ruoyi.system.domain.Shop;
+import com.ruoyi.system.service.ShopService;
 
 /**
- * 蜻蜓设备商户
+ * 门店服务
  * @author wxl
  */
 @Controller
-@RequestMapping("/system/merchant")
-public class SysMerchantController extends BaseController
+@RequestMapping("/system/shop")
+public class SysShopController extends BaseController
 {
-    private String prefix = "system/merchant";
+    private String prefix = "system/shop";
 
     @Autowired
-    private MerchantService merchantService;
+    private ShopService shopService;
     
     @Autowired
 	private OSSClientUtil ossClient;
 
-    @RequiresPermissions("system:merchant:view")
+    @RequiresPermissions("system:shop:view")
     @GetMapping()
     public String config()
     {
-        return prefix + "/merchant";
+        return prefix + "/shop";
     }
 
     /**
-         * 商户列表
+         * 门店列表
      */
-    @RequiresPermissions("system:merchant:list")
+    @RequiresPermissions("system:shop:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Merchant merchant)
+    public TableDataInfo list(Shop shop)
     {
         startPage();
-        List<Merchant> list = merchantService.selectMerchantList(merchant);
+        List<Shop> list = shopService.selectShopList(shop);
         return getDataTable(list);
     }
     
     /**
-     * 新增商户
+     * 新增门店
      */
     @GetMapping("/add")
     public String add()
@@ -72,72 +72,66 @@ public class SysMerchantController extends BaseController
     }
 
     /**
-     * 新增保存商户
+     * 新增保存门店
      * @throws Exception 
      */
-    @RequiresPermissions("system:merchant:add")
-    @Log(title = "商户管理", businessType = BusinessType.INSERT)
+    @RequiresPermissions("system:shop:add")
+    @Log(title = "门店管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Merchant merchant,@RequestParam("files") MultipartFile[] files) throws Exception
+    public AjaxResult addSave(Shop shop,@RequestParam("file") MultipartFile file) throws Exception
     {
     	
     	StringBuilder sb = new StringBuilder();
-		if(files.length!=0){
-            for(int i=0;i<files.length;i++){  
-                MultipartFile file = files[i];
-                if (file.getSize() > 0) {
+		if(file!=null){
                 	String name = ossClient.uploadImg2Oss(file);
             	    String imgUrl = ossClient.getImgUrl(name);
                         sb.append(imgUrl);
                         sb.append(",");
-                }
-            } 
         }
 		if(sb.length()>0){
 			sb.deleteCharAt(sb.length()-1);
 		}
     	
-    	merchant.setCreateTime(new Date());
-    	merchant.setCreateBy(ShiroUtils.getLoginName());
-        return toAjax(merchantService.insertMerchant(merchant));
+		shop.setCreateTime(new Date());
+		shop.setCreateBy(ShiroUtils.getLoginName());
+        return toAjax(shopService.insertShop(shop));
     }
     
     
     /**
-     * 修改商户
+     * 修改门店
      */
-    @GetMapping("/edit/{merchantId}")
-    public String edit(@PathVariable("merchantId") Long merchantId, ModelMap mmap)
+    @GetMapping("/edit/{shopId}")
+    public String edit(@PathVariable("shopId") Long shopId, ModelMap mmap)
     {
-        mmap.put("merchant", merchantService.selectMerchantById(merchantId));
+        mmap.put("shop", shopService.selectShopById(shopId));
         return prefix + "/edit";
     }
 
     /**
-     * 修改保存商户
+     * 修改保存门店
      */
-    @RequiresPermissions("system:merchant:edit")
-    @Log(title = "商户管理", businessType = BusinessType.UPDATE)
+    @RequiresPermissions("system:shop:edit")
+    @Log(title = "门店管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(@Validated Merchant merchant)
+    public AjaxResult editSave(@Validated Shop shop)
     {
-    	merchant.setUpdateBy(ShiroUtils.getLoginName());
-        return toAjax(merchantService.updateMerchant(merchant));
+        return toAjax(shopService.updateShop(shop));
     }
     
     /**
-     * 删除商户
+     * 删除门店
      * @throws Exception 
      */
-    @RequiresPermissions("system:merchant:remove")
-    @Log(title = "商户管理", businessType = BusinessType.DELETE)
+    @RequiresPermissions("system:shop:remove")
+    @Log(title = "门店管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) throws Exception
     {
-        return toAjax(merchantService.deleteMerchantByIds(ids));
+        return toAjax(shopService.deleteShopByIds(ids));
     }
     
 }
