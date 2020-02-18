@@ -101,8 +101,8 @@ public class PaymentController {
 		        		
 		        		OrderFlowing orderFlowing = new OrderFlowing();
 		        		
-		        		orderFlowing.setMerchantName(shop.getMerchaName());
-		        		orderFlowing.setMerchantId(shop.getMerchaId());
+		        		orderFlowing.setMerchantName(shop.getMerchatName());
+		        		orderFlowing.setMerchantId(shop.getMerchatId());
 		        		orderFlowing.setOrderAmount(new BigDecimal(orderAmount));
 		        		orderFlowing.setOrderNum(orderNum);
 		        		orderFlowing.setPayType(payType);

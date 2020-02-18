@@ -60,7 +60,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">门店地址：</label>
 							<div class="col-sm-8">
-								<input id="shopName" name="shopName" placeholder="请输门店名称"
+								<input id="address" name="address" placeholder="请输门店地址"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
@@ -71,9 +71,9 @@
 									<label class="col-sm-4 control-label is-required">门店logo：</label>
 									<div class="fileinput fileinput-new" data-provides="fileinput">
 													<div class="fileinput-preview thumbnail add" data-trigger="fileinput"></div>
-													<div>
+													<div style="display:none;">
 														<span class="btn btn-white btn-file">
-															<input id="organizationImage" name="organizationImage" type="file">
+															<input id="logoImage" name="logoImage" type="file">
 														</span>
 													</div>
 								    </div>
@@ -131,12 +131,15 @@
 
 			function uploadFile() {
 			var formData = new FormData();
-			if ($('#filePath')[0].files[0] == null) {
+			if ($('#logoImage')[0].files[0] == null) {
 			$.modal.alertWarning("请先选择文件路径");
 			return false;
 			}
-			formData.append('adName', $("#adName").val());
-			formData.append('file', $('#filePath')[0].files[0]);
+			formData.append('shopName', $("#shopName").val());
+			formData.append('address', $("#address").val());
+			formData.append('deviceId', $("#deviceId").val());
+			formData.append('mobile', $("#mobile").val());
+			formData.append('file', $('#logoImage')[0].files[0]);
 			$.ajax({
 			url: prefix + "/add",
 			type: 'post',

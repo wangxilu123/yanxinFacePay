@@ -109,8 +109,8 @@
       device_id, mobile, create_by, 
       create_time,merchat_name,merchat_id)
     values (#{shopName,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{deviceId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{merchatName,jdbcType=VARCHAR}, #{merchatId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{deviceId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP},#{merchatName,jdbcType=VARCHAR}, #{merchatId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.Shop" useGeneratedKeys="true">
     insert into shops

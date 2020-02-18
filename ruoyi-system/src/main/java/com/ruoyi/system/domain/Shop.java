@@ -9,9 +9,9 @@ public class Shop extends BaseEntity{
 
     private String shopName;
     
-    private String merchaName;
+    private String merchatName;
     
-    private Integer merchaId;
+    private Integer merchatId;
 
     private String logoUrl;
 
@@ -25,20 +25,22 @@ public class Shop extends BaseEntity{
 
     private Date createTime;
 
-    public String getMerchaName() {
-		return merchaName;
+
+	public String getMerchatName() {
+		return merchatName;
 	}
 
-	public void setMerchaName(String merchaName) {
-		this.merchaName = merchaName;
+	public void setMerchatName(String merchatName) {
+		this.merchatName = merchatName;
 	}
 
-	public Integer getMerchaId() {
-		return merchaId;
+
+	public Integer getMerchatId() {
+		return merchatId;
 	}
 
-	public void setMerchaId(Integer merchaId) {
-		this.merchaId = merchaId;
+	public void setMerchatId(Integer merchatId) {
+		this.merchatId = merchatId;
 	}
 
 	public Integer getId() {

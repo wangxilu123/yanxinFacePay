@@ -81,6 +81,12 @@
                     title: '门店名称',
                 },
                 {
+                    title: '门店logo',
+                     formatter: function(value, row, index) {
+				    		return $.table.imageView(row.logoUrl);
+				    }
+                },
+                {
                     field: 'mobile',
                     title: '联系电话'
                 },

@@ -81,18 +81,11 @@ public class SysShopController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Shop shop,@RequestParam("file") MultipartFile file) throws Exception
     {
-    	
-    	StringBuilder sb = new StringBuilder();
 		if(file!=null){
                 	String name = ossClient.uploadImg2Oss(file);
             	    String imgUrl = ossClient.getImgUrl(name);
-                        sb.append(imgUrl);
-                        sb.append(",");
+            	    shop.setLogoUrl(imgUrl);
         }
-		if(sb.length()>0){
-			sb.deleteCharAt(sb.length()-1);
-		}
-    	
 		shop.setCreateTime(new Date());
 		shop.setCreateBy(ShiroUtils.getLoginName());
         return toAjax(shopService.insertShop(shop));

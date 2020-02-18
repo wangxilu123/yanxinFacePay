@@ -71,16 +71,23 @@ public class SysAdvertisementController extends BaseController
 
     /**
      * 新增保存广告
+     * @throws Exception 
      */
     @RequiresPermissions("system:advertisement:add")
     @Log(title = "广告管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(@RequestParam("file") MultipartFile file, Advertisement advertisement)
+    public AjaxResult addSave(@RequestParam("file") MultipartFile file, Advertisement advertisement) throws Exception
     {
+    	
+    	if(file!=null){
+        	String name = ossClient.uploadImg2Oss(file);
+    	    String imgUrl = ossClient.getImgUrl(name);
+    	    advertisement.setUrl(imgUrl);
+        }
     	advertisement.setCreateTime(new Date());
         advertisement.setCreater(ShiroUtils.getLoginName());
-        return toAjax(advertisementService.insertAd(advertisement));
+        return toAjax(advertisementService.insertAd(advertisement));	
     }
     
     /**
