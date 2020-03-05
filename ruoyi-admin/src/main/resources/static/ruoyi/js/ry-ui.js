@@ -960,6 +960,29 @@ var table = {
             	table.set();
                 $.modal.openTab("添加" + table.options.modalName, $.operate.addUrl(id));
             },
+            
+            // 签约信息
+            signTab: function(id) {
+            	table.set();
+            	$.modal.openTab("签约" + table.options.modalName, $.operate.signUrl(id));
+            },
+            
+            // 签约访问地址
+            signUrl: function(id) {
+            	var url = "/404.html";
+            	if ($.common.isNotEmpty(id)) {
+            	    url = table.options.signUrl.replace("{id}", id);
+            	} else {
+            	    var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+            	    if (id.length == 0) {
+            			$.modal.alertWarning("请至少选择一条记录");
+            			return;
+            		}
+            	    url = table.options.signUrl.replace("{id}", id);
+            	}
+                return url;
+            },
+            
             // 添加信息 全屏
             addFull: function(id) {
             	table.set();

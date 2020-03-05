@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改广告')" />
+	<th:block th:include="include :: jasny-bootstrap-css" />
+</head>
+<body>
+    <div class="main-content">
+        <form class="form-horizontal" id="form-user-edit" th:object="${merchant}">
+            <input id="merchantId" name="merchantId"  type="hidden"  th:field="*{id}" />
+            <div class="row">
+            	<div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">签约费率：</label>
+                        <div class="col-sm-3">
+                            <input name="siginRate" id="siginRate" placeholder="请输入签约费率" class="form-control" type="text" maxlength="30"required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="row">
+			<div class="col-sm-offset-5 col-sm-10">
+				<button type="button" class="btn btn-sm btn-primary"
+					onclick="submitHandler()">
+					<i class="fa fa-check"></i>
+					保 存
+				</button>&nbsp;
+				<button type="button" class="btn btn-sm btn-danger"
+					onclick="closeItem()">
+					<i class="fa fa-reply-all"></i>
+					关 闭
+				</button>
+			</div>
+		</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: jasny-bootstrap-js" />
+	<script type="text/javascript">
+	
+	 var prefix = ctx + "system/merchant";
+        function submitHandler() {
+	        if ($.validate.form()) {
+	        	var data = $("#form-user-edit").serializeArray();
+	        	var siginRate = $("#siginRate").val();
+	        	var merchantId = $("#merchantId").val();
+	        	data.push({"name": "merchantId", "value": merchantId});
+	        	$.operate.saveTab(prefix + "/sign", data);
+	        }
+	    }
+    </script>
+</body>
+</html>

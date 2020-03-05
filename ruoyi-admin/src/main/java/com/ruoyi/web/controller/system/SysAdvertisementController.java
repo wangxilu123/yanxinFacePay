@@ -6,7 +6,10 @@ import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +59,7 @@ public class SysAdvertisementController extends BaseController
     public TableDataInfo list(Advertisement advertisement)
     {
         startPage();
+        advertisement.setCreateBy(ShiroUtils.getLoginName());
         List<Advertisement> list = advertisementService.selectAdvertisementList(advertisement);
         return getDataTable(list);
     }
@@ -88,6 +92,28 @@ public class SysAdvertisementController extends BaseController
     	advertisement.setCreateTime(new Date());
         advertisement.setCreater(ShiroUtils.getLoginName());
         return toAjax(advertisementService.insertAd(advertisement));	
+    }
+    
+    /**
+     * 修改广告
+     */
+    @GetMapping("/edit/{advertisementId}")
+    public String edit(@PathVariable("advertisementId") Long advertisementId, ModelMap mmap)
+    {
+        mmap.put("advertisement", advertisementService.selectAdvertisementById(advertisementId));
+        return prefix + "/edit";
+    }
+
+    /**
+     * 修改广告保存
+     */
+    @RequiresPermissions("system:advertisement:edit")
+    @Log(title = "门店管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(@Validated Advertisement advertisement)
+    {
+        return toAjax(advertisementService.updateAd(advertisement));
     }
     
     /**

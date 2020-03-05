@@ -51,7 +51,7 @@ public class AgentUserServiceImpl implements AgentUserService
 	}
 	@Override
 	public int updateAg(AgentUser agentUser) {
-		return agentUserMapper.updateByPrimaryKey(agentUser);
+		return agentUserMapper.updateByPrimaryKeySelective(agentUser);
 	}
 	@Override
 	public AgentUser selectAgById(Long agentUserId) {

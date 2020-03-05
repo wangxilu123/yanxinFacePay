@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BusinessCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.ruoyi.system.domain.BusinessCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="one_category_name" jdbcType="VARCHAR" property="oneCategoryName" />
+    <result column="one_category_code" jdbcType="VARCHAR" property="oneCategoryCode" />
+    <result column="two_category_name" jdbcType="VARCHAR" property="twoCategoryName" />
+    <result column="two_category_code" jdbcType="VARCHAR" property="twoCategoryCode" />
+    <result column="three_category_name" jdbcType="VARCHAR" property="threeCategoryName" />
+    <result column="three_category_code" jdbcType="VARCHAR" property="threeCategoryCode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, one_category_name, one_category_code, two_category_name, two_category_code, three_category_name, 
+    three_category_code
+  </sql>
+  <select id="selectByExample" parameterType="com.ruoyi.system.domain.BusinessCategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from business_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from business_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from business_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ruoyi.system.domain.BusinessCategoryExample">
+    delete from business_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.BusinessCategory" useGeneratedKeys="true">
+    insert into business_category (one_category_name, one_category_code, 
+      two_category_name, two_category_code, three_category_name, 
+      three_category_code)
+    values (#{oneCategoryName,jdbcType=VARCHAR}, #{oneCategoryCode,jdbcType=VARCHAR}, 
+      #{twoCategoryName,jdbcType=VARCHAR}, #{twoCategoryCode,jdbcType=VARCHAR}, #{threeCategoryName,jdbcType=VARCHAR}, 
+      #{threeCategoryCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.BusinessCategory" useGeneratedKeys="true">
+    insert into business_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oneCategoryName != null">
+        one_category_name,
+      </if>
+      <if test="oneCategoryCode != null">
+        one_category_code,
+      </if>
+      <if test="twoCategoryName != null">
+        two_category_name,
+      </if>
+      <if test="twoCategoryCode != null">
+        two_category_code,
+      </if>
+      <if test="threeCategoryName != null">
+        three_category_name,
+      </if>
+      <if test="threeCategoryCode != null">
+        three_category_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oneCategoryName != null">
+        #{oneCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="oneCategoryCode != null">
+        #{oneCategoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twoCategoryName != null">
+        #{twoCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="twoCategoryCode != null">
+        #{twoCategoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="threeCategoryName != null">
+        #{threeCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeCategoryCode != null">
+        #{threeCategoryCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ruoyi.system.domain.BusinessCategoryExample" resultType="java.lang.Long">
+    select count(*) from business_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update business_category
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.oneCategoryName != null">
+        one_category_name = #{record.oneCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oneCategoryCode != null">
+        one_category_code = #{record.oneCategoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twoCategoryName != null">
+        two_category_name = #{record.twoCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twoCategoryCode != null">
+        two_category_code = #{record.twoCategoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.threeCategoryName != null">
+        three_category_name = #{record.threeCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.threeCategoryCode != null">
+        three_category_code = #{record.threeCategoryCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update business_category
+    set id = #{record.id,jdbcType=INTEGER},
+      one_category_name = #{record.oneCategoryName,jdbcType=VARCHAR},
+      one_category_code = #{record.oneCategoryCode,jdbcType=VARCHAR},
+      two_category_name = #{record.twoCategoryName,jdbcType=VARCHAR},
+      two_category_code = #{record.twoCategoryCode,jdbcType=VARCHAR},
+      three_category_name = #{record.threeCategoryName,jdbcType=VARCHAR},
+      three_category_code = #{record.threeCategoryCode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ruoyi.system.domain.BusinessCategory">
+    update business_category
+    <set>
+      <if test="oneCategoryName != null">
+        one_category_name = #{oneCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="oneCategoryCode != null">
+        one_category_code = #{oneCategoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twoCategoryName != null">
+        two_category_name = #{twoCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="twoCategoryCode != null">
+        two_category_code = #{twoCategoryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="threeCategoryName != null">
+        three_category_name = #{threeCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="threeCategoryCode != null">
+        three_category_code = #{threeCategoryCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ruoyi.system.domain.BusinessCategory">
+    update business_category
+    set one_category_name = #{oneCategoryName,jdbcType=VARCHAR},
+      one_category_code = #{oneCategoryCode,jdbcType=VARCHAR},
+      two_category_name = #{twoCategoryName,jdbcType=VARCHAR},
+      two_category_code = #{twoCategoryCode,jdbcType=VARCHAR},
+      three_category_name = #{threeCategoryName,jdbcType=VARCHAR},
+      three_category_code = #{threeCategoryCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

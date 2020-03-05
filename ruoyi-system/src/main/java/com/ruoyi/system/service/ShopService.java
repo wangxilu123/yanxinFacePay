@@ -11,7 +11,7 @@ import com.ruoyi.system.domain.Shop;
  */
 public interface ShopService
 {
-	 public Shop selectShopBydeviceId(Long deviceId);
+	 public Shop selectShopBydeviceId(String deviceId);
 	 
 	 public int insertShop(Shop shop);
 	 

@@ -14,7 +14,7 @@
 						<div class="select-list">
 							<ul>
 								<li>
-									门店名称：<input type="text" name="loginName"/>
+									门店名称：<input type="text" name="shopName"/>
 								</li>
 								<li class="select-time">
 									<label>创建时间： </label>
@@ -32,13 +32,13 @@
 				</div>
 				
 		        <div class="btn-group-sm" id="toolbar" role="group">
-		        	<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:merchant:add">
+		        	<a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:shop:add">
 		                <i class="fa fa-plus"></i> 新增
 		            </a>
-		             <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:merchant:edit">
+		             <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:shop:edit">
 			            <i class="fa fa-edit"></i> 修改
 			        </a>
-		            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:merchant:remove">
+		            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:shop:remove">
 		                <i class="fa fa-remove"></i> 删除
 		            </a>
 		        </div>

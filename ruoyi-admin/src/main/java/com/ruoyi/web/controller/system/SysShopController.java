@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,11 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.OSSClientUtil;
 import com.ruoyi.framework.util.ShiroUtils;
+import com.ruoyi.system.domain.AgentUser;
+import com.ruoyi.system.domain.Merchant;
 import com.ruoyi.system.domain.Shop;
+import com.ruoyi.system.service.AgentUserService;
+import com.ruoyi.system.service.MerchantService;
 import com.ruoyi.system.service.ShopService;
 
 /**
@@ -38,6 +43,12 @@ public class SysShopController extends BaseController
 
     @Autowired
     private ShopService shopService;
+    
+    @Autowired
+	private MerchantService merchantService;
+    
+    @Autowired
+    private AgentUserService agentUserService;
     
     @Autowired
 	private OSSClientUtil ossClient;
@@ -58,7 +69,26 @@ public class SysShopController extends BaseController
     public TableDataInfo list(Shop shop)
     {
         startPage();
-        List<Shop> list = shopService.selectShopList(shop);
+        List<Shop> list = new ArrayList<Shop>();
+		String roleType = ShiroUtils.getSysUser().getRoles().get(0).getRoleName();
+
+		if ("管理员".equals(roleType)) {
+			// 根据代理商查询所有交易流水
+			list = shopService.selectShopList(shop);
+		}
+		else if ("代理商".equals(roleType)) {
+			AgentUser agentUser = new AgentUser();
+        	agentUser.setUserId(ShiroUtils.getUserId().intValue());
+        	List<AgentUser> agentList = agentUserService.selectAgentUserList(agentUser);
+        	if(agentList.size()!=0) {
+			shop.setAgentUserId(agentList.get(0).getId());
+			list = shopService.selectShopList(shop);
+        	}
+		}
+		else {
+			shop.setCreateBy(ShiroUtils.getLoginName());
+			list = shopService.selectShopList(shop);
+		}
         return getDataTable(list);
     }
     
@@ -81,6 +111,16 @@ public class SysShopController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Shop shop,@RequestParam("file") MultipartFile file) throws Exception
     {
+    	//根据当前登录者查询对应的商户信息
+    	Merchant merchant = new Merchant();
+    	merchant.setUserId(ShiroUtils.getUserId().intValue());
+    	List<Merchant> list = merchantService.selectMerchantList(merchant);
+    	if(list.size()!=0) {
+    		shop.setMerchatId(list.get(0).getId());
+    		shop.setMerchatName(list.get(0).getMerchantName());
+    		shop.setAgentUserId(list.get(0).getAgentUserId());
+    		shop.setAgentUserName(list.get(0).getAgentUserName());
+    	}
 		if(file!=null){
                 	String name = ossClient.uploadImg2Oss(file);
             	    String imgUrl = ossClient.getImgUrl(name);

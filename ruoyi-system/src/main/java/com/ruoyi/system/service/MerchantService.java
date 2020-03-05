@@ -23,4 +23,6 @@ public interface MerchantService
 	 public int deleteMerchantByIds(String ids) throws Exception;
 	 
 	 public Merchant selectMerchantById(Long merchantId);
+	 
+	 public Merchant selectMerchantByappId(String appid);
 }

@@ -18,7 +18,17 @@
     <result column="idcard_positive_url" jdbcType="VARCHAR" property="idcardPositiveUrl" />
     <result column="idcard_otherSide_url" jdbcType="VARCHAR" property="idcardOthersideUrl" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="appid" jdbcType="VARCHAR" property="appid" />
+    <result column="app_auth_token" jdbcType="VARCHAR" property="appAuthToken" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+     <result column="agent_userName" jdbcType="VARCHAR" property="agentUserName" />
+     <result column="agent_userId" jdbcType="INTEGER" property="agentUserId" />
+     <result column="is_signing" jdbcType="VARCHAR" property="isSigning" />
+    <result column="sigin_rate" jdbcType="DECIMAL" property="siginRate" />
+    <result column="ali_account" jdbcType="VARCHAR" property="aliAccount" />
+    <result column="shop_imageUrl" jdbcType="VARCHAR" property="shopImageUrl" />
+    <result column="qualifications_imageUrl" jdbcType="VARCHAR" property="qualificationsImageUrl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,7 +91,7 @@
   <sql id="Base_Column_List">
     id, merchant_name, business_category, address, mobile, contacts, phone, email, receiving_bank, 
     cardholder, card_number, business_license_url, organization_url, idcard_positive_url, 
-    idcard_otherSide_url, create_by, create_time
+    idcard_otherSide_url, create_by, create_time,appid,app_auth_token,user_id,agent_userName,agent_userId,is_signing,sigin_rate,ali_account,shop_imageUrl,qualifications_imageUrl
   </sql>
   <select id="selectByExample" parameterType="com.ruoyi.system.domain.MerchantExample" resultMap="BaseResultMap">
     select
@@ -119,13 +129,14 @@
       email, receiving_bank, cardholder, 
       card_number, business_license_url, organization_url, 
       idcard_positive_url, idcard_otherSide_url, 
-      create_by, create_time)
+      create_by, create_time,appid,app_auth_token,user_id,agent_userName,agent_userId,is_signing,sigin_rate,ali_account,shop_imageUrl,qualifications_imageUrl)
     values (#{merchantName,jdbcType=VARCHAR}, #{businessCategory,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{receivingBank,jdbcType=VARCHAR}, #{cardholder,jdbcType=VARCHAR}, 
       #{cardNumber,jdbcType=VARCHAR}, #{businessLicenseUrl,jdbcType=VARCHAR}, #{organizationUrl,jdbcType=VARCHAR}, 
       #{idcardPositiveUrl,jdbcType=VARCHAR}, #{idcardOthersideUrl,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{appid,jdbcType=VARCHAR},#{appAuthToken,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER}
+      ,#{agentUserName,jdbcType=VARCHAR},#{agentUserId,jdbcType=INTEGER},#{isSigning,jdbcType=VARCHAR},#{siginRate,jdbcType=DECIMAL},#{aliAccount,jdbcType=VARCHAR},#{shopImageUrl,jdbcType=VARCHAR},#{qualificationsImageUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.Merchant" useGeneratedKeys="true">
     insert into merchant
@@ -178,6 +189,37 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="appid != null">
+        appid,
+      </if>
+      <if test="appAuthToken != null">
+        app_auth_token,
+      </if>
+       <if test="userId != null">
+        user_id,
+      </if>
+       <if test="agentUserName != null">
+        agent_userName,
+      </if>
+      <if test="agentUserId != null">
+        agent_userId,
+      </if>
+      <if test="isSigning != null">
+        is_signing,
+      </if>
+      <if test="siginRate != null">
+        sigin_rate,
+      </if>
+       <if test="aliAccount != null">
+        ali_account,
+      </if>
+      
+      <if test="shopImageUrl != null">
+        shop_imageUrl,
+      </if>
+       <if test="qualificationsImageUrl != null">
+        qualifications_imageUrl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="merchantName != null">
@@ -227,6 +269,36 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appAuthToken != null">
+        #{appAuthToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+       <if test="agentUserName != null">
+        #{agentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentUserId != null">
+        #{agentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isSigning != null">
+        #{isSigning,jdbcType=VARCHAR},
+      </if>
+      <if test="siginRate != null">
+        #{siginRate,jdbcType=DECIMAL},
+      </if>
+      <if test="aliAccount != null">
+        #{aliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="shopImageUrl != null">
+        #{shopImageUrl,jdbcType=VARCHAR},
+      </if>
+       <if test="qualificationsImageUrl != null">
+        #{qualificationsImageUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -290,6 +362,36 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+       <if test="record.appid != null">
+       appid = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appAuthToken != null">
+       app_auth_token = #{record.appAuthToken,jdbcType=VARCHAR},
+      </if>
+       <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.agentUserName != null">
+        agent_userName = #{record.agentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentUserId != null">
+        agent_userId = #{record.agentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isSigning != null">
+       is_signing = #{record.isSigning,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siginRate != null">
+        sigin_rate = #{record.siginRate,jdbcType=DECIMAL},
+      </if>
+       <if test="record.aliAccount != null">
+        ali_account = #{record.aliAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopImageUrl != null">
+       shop_imageUrl = #{record.shopImageUrl,jdbcType=VARCHAR},
+      </if>
+       <if test="record.qualificationsImageUrl != null">
+       qualifications_imageUrl = #{record.qualificationsImageUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -313,7 +415,17 @@
       idcard_positive_url = #{record.idcardPositiveUrl,jdbcType=VARCHAR},
       idcard_otherSide_url = #{record.idcardOthersideUrl,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      appid = #{record.appid,jdbcType=VARCHAR},
+      app_auth_token = #{record.appAuthToken,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      agent_userName = #{record.agentUserName,jdbcType=VARCHAR},
+      agent_userId = #{record.agentUserId,jdbcType=INTEGER},
+      is_signing = #{record.isSigning,jdbcType=VARCHAR},
+      sigin_rate = #{record.siginRate,jdbcType=DECIMAL},
+      ali_account = #{record.aliAccount,jdbcType=VARCHAR},
+      shop_imageUrl = #{record.shopImageUrl,jdbcType=VARCHAR},
+      qualifications_imageUrl = #{record.qualificationsImageUrl,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -369,6 +481,37 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+       <if test="appid != null">
+       appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="appAuthToken != null">
+       app_auth_token = #{appAuthToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+       <if test="agentUserName != null">
+        agent_userName = #{agentUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentUserId != null">
+        agent_userId = #{agentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isSigning != null">
+       is_signing = #{isSigning,jdbcType=VARCHAR},
+      </if>
+      <if test="siginRate != null">
+        sigin_rate = #{siginRate,jdbcType=DECIMAL},
+      </if>
+      <if test="aliAccount != null">
+        ali_account = #{aliAccount,jdbcType=VARCHAR},
+      </if>
+      
+       <if test="shopImageUrl != null">
+       shop_imageUrl = #{shopImageUrl,jdbcType=VARCHAR},
+      </if>
+       <if test="qualificationsImageUrl != null">
+       qualifications_imageUrl = #{qualificationsImageUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -389,14 +532,24 @@
       idcard_positive_url = #{idcardPositiveUrl,jdbcType=VARCHAR},
       idcard_otherSide_url = #{idcardOthersideUrl,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      appid = #{appid,jdbcType=VARCHAR},
+      app_auth_token = #{appAuthToken,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      agent_userName = #{agentUserName,jdbcType=VARCHAR},
+      agent_userId = #{agentUserId,jdbcType=INTEGER},
+      is_signing = #{isSigning,jdbcType=VARCHAR},
+      sigin_rate = #{siginRate,jdbcType=DECIMAL},
+      ali_account = #{aliAccount,jdbcType=VARCHAR},
+      shop_imageUrl = #{shopImageUrl,jdbcType=VARCHAR},
+      qualifications_imageUrl = #{qualificationsImageUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
   <sql id="selectAgVo">
         select id, merchant_name, business_category, address, mobile, contacts, phone, email, receiving_bank, 
     cardholder, card_number, business_license_url, organization_url, idcard_positive_url, 
-    idcard_otherSide_url, create_by, create_time
+    idcard_otherSide_url, create_by, create_time,appid,app_auth_token,user_id,agent_userName,agent_userId,is_signing,sigin_rate,ali_account,shop_imageUrl,qualifications_imageUrl 
 		from merchant
     </sql>
    <select id="selectMerchantList" parameterType="Merchant" resultMap="BaseResultMap">
@@ -405,6 +558,14 @@
 			<if test="merchantName != null and merchantName != ''">
 				AND merchant_name like concat('%', #{merchantName}, '%')
 			</if>
+			<if test="createBy != null and createBy != ''">
+				AND create_by = #{createBy,jdbcType=VARCHAR}
+			</if>
+			
+			<if test="userId != null and userId != ''">
+				AND user_id = #{userId,jdbcType=INTEGER}
+			</if>
+			
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
 				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
 			</if>

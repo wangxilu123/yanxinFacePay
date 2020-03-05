@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<th:block th:include="include :: header('新增代理商')" />
+		<th:block th:include="include :: header('新增商户')" />
 		<th:block th:include="include :: jquery-steps-css" />
 		<th:block th:include="include :: jasny-bootstrap-css" />
 	</head>
@@ -50,7 +50,7 @@
 								<h1>商户基本信息</h1>
 								<fieldset>
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label>商户名称 *</label>
 												<input id="merchantName" name="merchantName"type="text" class="form-control required">
@@ -61,7 +61,7 @@
 											</div>
 											
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 										    <div class="form-group">
 											    <label>经营类目 *</label>
 												<select id="businessCategory" name="businessCategory"class="form-control m-b">
@@ -79,7 +79,7 @@
 								<h1>结算信息</h1>
 								<fieldset>
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label>联系人 *</label>
 												<input id="contacts" name="contacts" type="text"class="form-control required">
@@ -93,7 +93,7 @@
 												<input id="email" name="email" type="text"class="form-control required">
 											</div>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label>收款银行 *</label>
 												<input id="receivingBank" name="receivingBank" type="text"class="form-control required">
@@ -105,6 +105,17 @@
 											<div class="form-group">
 												<label>银行账号 *</label>
 												<input id="cardNumber" name="cardNumber" type="text"class="form-control required">
+											</div>
+										</div>
+										
+										<div class="col-sm-3">
+											<div class="form-group">
+												<label>商户appid *</label>
+												<input id="appid" name="appid" type="text"class="form-control required">
+											</div>
+											<div class="form-group">
+												<label>商户支付宝账号 *</label>
+												<input id="aliAccount" name="aliAccount" type="text"class="form-control required">
 											</div>
 										</div>
 									</div>
@@ -166,6 +177,35 @@
 											</div>
 										</div>
 									</div>
+									
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+												<label>商店门头照 *</label>
+													<div class="fileinput-preview thumbnail add" data-trigger="fileinput" ></div>
+													<div style="display:none;">
+														<span class="btn btn-white btn-file">
+															<input id="shopImageUrl" name="shopImageUrl" type="file">
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+											<label>经营资质照片 *</label>
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-preview thumbnail add" data-trigger="fileinput"></div>
+													<div style="display:none;">
+														<span class="btn btn-white btn-file">
+															<input id="qualificationsImageUrl" name="qualificationsImageUrl" type="file">
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</fieldset>
 							</form>
 						</div>
@@ -221,6 +261,8 @@
 			formData.append('files', $('#organizationImage')[0].files[0]);
 			formData.append('files', $('#idcardPositiveImage')[0].files[0]);
 			formData.append('files', $('#idcardOthersideImage')[0].files[0]);
+			formData.append('files', $('#shopImageUrl')[0].files[0]);
+			formData.append('files', $('#qualificationsImageUrl')[0].files[0]);
 			formData.append('merchantName', $("#merchantName").val());
 			formData.append('address', $("#address").val());
 			formData.append('businessCategory', $("#businessCategory").val());
@@ -231,6 +273,9 @@
 			formData.append('receivingBank', $("#receivingBank").val());
 			formData.append('cardholder', $("#cardholder").val());
 			formData.append('cardNumber', $("#cardNumber").val());
+			
+			formData.append('appid', $("#appid").val());
+			formData.append('aliAccount', $("#aliAccount").val());
 			$.ajax({
 			url: prefix + "/add",
 			type: 'post',

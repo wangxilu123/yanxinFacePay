@@ -6,7 +6,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="ad_name" jdbcType="VARCHAR" property="adName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, ad_name, create_time, creater
+    id, url, ad_name, create_time, create_by
   </sql>
   <select id="selectByExample" parameterType="com.ruoyi.system.domain.AdvertisementExample" resultMap="BaseResultMap">
     select
@@ -101,9 +101,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.Advertisement" useGeneratedKeys="true">
     insert into advertisement (url, ad_name, create_time, 
-      creater)
+      create_by)
     values (#{url,jdbcType=VARCHAR}, #{adName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{creater,jdbcType=VARCHAR})
+      #{createBy,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.ruoyi.system.domain.Advertisement" useGeneratedKeys="true">
     insert into advertisement
@@ -117,8 +117,8 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="creater != null">
-        creater,
+      <if test="createBy != null">
+        create_by,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -131,8 +131,8 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="creater != null">
-        #{creater,jdbcType=VARCHAR},
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -157,8 +157,8 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.creater != null">
-        creater = #{record.creater,jdbcType=VARCHAR},
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -171,7 +171,7 @@
       url = #{record.url,jdbcType=VARCHAR},
       ad_name = #{record.adName,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      creater = #{record.creater,jdbcType=VARCHAR}
+      create_by = #{record.createBy,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -188,8 +188,8 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="creater != null">
-        creater = #{creater,jdbcType=VARCHAR},
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -199,12 +199,12 @@
     set url = #{url,jdbcType=VARCHAR},
       ad_name = #{adName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      creater = #{creater,jdbcType=VARCHAR}
+      create_by = #{createBy,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
     <sql id="selectAdvVo">
-        select id, url, ad_name, create_time, creater 
+        select id, url, ad_name, create_time, create_by 
 		from advertisement
     </sql>
    <select id="selectAdvertisementList" parameterType="Advertisement" resultMap="BaseResultMap">
@@ -212,6 +212,9 @@
         <where>
 			<if test="adName != null and adName != ''">
 				AND ad_name like concat('%', #{adName}, '%')
+			</if>
+			<if test="createBy != null and createBy != ''">
+				AND create_by = #{createBy,jdbcType=VARCHAR}
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
 				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ruoyi.system.domain.AgentUser;
 import com.ruoyi.system.domain.Merchant;
 import com.ruoyi.system.domain.MerchantExample;
 import com.ruoyi.system.mapper.MerchantMapper;
@@ -52,13 +51,24 @@ public class MerchantServiceImpl implements MerchantService
 	}
 	@Override
 	public int updateMerchant(Merchant merchant) {
-		return merchantMapper.updateByPrimaryKey(merchant);
+		return merchantMapper.updateByPrimaryKeySelective(merchant);
 	}
 	@Override
 	public Merchant selectMerchantById(Long merchantId) {
 		return merchantMapper.selectByPrimaryKey(merchantId.intValue());
 	}
-
-	
+	@Override
+	public Merchant selectMerchantByappId(String appid) {
+		MerchantExample example = new MerchantExample();
+		example.createCriteria().andAppIdEqualTo(appid);
+		
+		List<Merchant> list = merchantMapper.selectByExample(example);
+		
+		if(list.size()!=0) {
+			return list.get(0);
+		}else {
+			return null;
+		}
+	}
 	
 }

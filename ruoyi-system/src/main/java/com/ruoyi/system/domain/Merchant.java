@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -36,10 +37,103 @@ public class Merchant extends BaseEntity{
     private String idcardOthersideUrl;
 
     private String createBy;
+    
+    private String appid;
+    
+    private String appAuthToken;
+    
+    private String agentUserName;
+    
+    private Integer agentUserId;
 
     private Date createTime;
+    
+    private Integer userId;
+    
+    private String isSigning;
 
-    public Integer getId() {
+    private BigDecimal siginRate;
+    
+    private String aliAccount;
+    
+    private String shopImageUrl;
+    
+    private String qualificationsImageUrl;
+
+    public String getShopImageUrl() {
+		return shopImageUrl;
+	}
+
+	public void setShopImageUrl(String shopImageUrl) {
+		this.shopImageUrl = shopImageUrl;
+	}
+
+	public String getQualificationsImageUrl() {
+		return qualificationsImageUrl;
+	}
+
+	public void setQualificationsImageUrl(String qualificationsImageUrl) {
+		this.qualificationsImageUrl = qualificationsImageUrl;
+	}
+
+	public String getAliAccount() {
+		return aliAccount;
+	}
+
+	public void setAliAccount(String aliAccount) {
+		this.aliAccount = aliAccount;
+	}
+
+	public String getIsSigning() {
+		return isSigning;
+	}
+
+	public void setIsSigning(String isSigning) {
+		this.isSigning = isSigning;
+	}
+
+	public BigDecimal getSiginRate() {
+		return siginRate;
+	}
+
+	public void setSiginRate(BigDecimal siginRate) {
+		this.siginRate = siginRate;
+	}
+
+	public String getAgentUserName() {
+		return agentUserName;
+	}
+
+	public void setAgentUserName(String agentUserName) {
+		this.agentUserName = agentUserName;
+	}
+
+
+	public Integer getAgentUserId() {
+		return agentUserId;
+	}
+
+	public void setAgentUserId(Integer agentUserId) {
+		this.agentUserId = agentUserId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getAppid() {
+		return appid;
+	}
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -51,7 +145,15 @@ public class Merchant extends BaseEntity{
         return merchantName;
     }
 
-    public void setMerchantName(String merchantName) {
+    public String getAppAuthToken() {
+		return appAuthToken;
+	}
+
+	public void setAppAuthToken(String appAuthToken) {
+		this.appAuthToken = appAuthToken;
+	}
+
+	public void setMerchantName(String merchantName) {
         this.merchantName = merchantName == null ? null : merchantName.trim();
     }
 

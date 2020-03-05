@@ -29,8 +29,8 @@ server:
     min-spare-threads: 30
     
   ssl: #添加的ssl自签名证书
-    key-store: classpath:tomcat.keystore #注意路径要配置正确
-    key-store-password: facepay
+    key-store: 3482237_supertest.i6ya.com.pfx #注意路径要配置正确
+    key-store-password: 5J4fvolI
     
 http: # 新加一个http的端口号配置
   port: 80    

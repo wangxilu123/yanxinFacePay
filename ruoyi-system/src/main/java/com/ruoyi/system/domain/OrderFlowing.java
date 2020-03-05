@@ -11,6 +11,10 @@ public class OrderFlowing extends BaseEntity{
     private String orderNum;
 
     private String merchantName;
+    
+    private String agentUserName;
+    
+    private Integer agentUserId;
 
     private Integer merchantId;
 
@@ -28,7 +32,23 @@ public class OrderFlowing extends BaseEntity{
 
     private Date createTime;
 
-    public Integer getId() {
+    public String getAgentUserName() {
+		return agentUserName;
+	}
+
+	public void setAgentUserName(String agentUserName) {
+		this.agentUserName = agentUserName;
+	}
+
+	public Integer getAgentUserId() {
+		return agentUserId;
+	}
+
+	public void setAgentUserId(Integer agentUserId) {
+		this.agentUserId = agentUserId;
+	}
+
+	public Integer getId() {
         return id;
     }
 

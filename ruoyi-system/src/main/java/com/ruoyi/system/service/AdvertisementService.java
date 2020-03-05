@@ -21,4 +21,6 @@ public interface AdvertisementService
 	 public int updateAd(Advertisement advertisement);
 	 
 	 public int deleteAdByIds(String ids) throws Exception;
+	 
+	 public Advertisement selectAdvertisementById(Long advertisementId);
 }

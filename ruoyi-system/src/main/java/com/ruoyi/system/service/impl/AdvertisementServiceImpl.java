@@ -43,8 +43,7 @@ public class AdvertisementServiceImpl implements AdvertisementService
 	}
 	@Override
 	public int updateAd(Advertisement advertisement) {
-		// TODO Auto-generated method stub
-		return 0;
+		return advertisementMapper.updateByPrimaryKeySelective(advertisement);
 	}
 	@Override
 	public int deleteAdByIds(String ids) throws Exception {
@@ -53,6 +52,11 @@ public class AdvertisementServiceImpl implements AdvertisementService
 			advertisementMapper.deleteByPrimaryKey(Integer.parseInt(id[i]));
 		}
 		return 1;
+	}
+	@Override
+	public Advertisement selectAdvertisementById(Long advertisementId) {
+		
+		return advertisementMapper.selectByPrimaryKey(advertisementId.intValue());
 	}
 
 	

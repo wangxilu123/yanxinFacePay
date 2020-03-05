@@ -249,6 +249,11 @@ public class MerchantExample {
             addCriterion("business_category =", value, "businessCategory");
             return (Criteria) this;
         }
+        
+        public Criteria andAppIdEqualTo(String value) {
+            addCriterion("appid =", value, "appid");
+            return (Criteria) this;
+        }
 
         public Criteria andBusinessCategoryNotEqualTo(String value) {
             addCriterion("business_category <>", value, "businessCategory");

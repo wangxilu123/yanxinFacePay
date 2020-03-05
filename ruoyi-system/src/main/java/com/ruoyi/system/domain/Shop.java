@@ -24,7 +24,27 @@ public class Shop extends BaseEntity{
     private String createBy;
 
     private Date createTime;
+    
+    private String agentUserName;
+    
+    private Integer agentUserId;
 
+
+	public String getAgentUserName() {
+		return agentUserName;
+	}
+
+	public void setAgentUserName(String agentUserName) {
+		this.agentUserName = agentUserName;
+	}
+
+	public Integer getAgentUserId() {
+		return agentUserId;
+	}
+
+	public void setAgentUserId(Integer agentUserId) {
+		this.agentUserId = agentUserId;
+	}
 
 	public String getMerchatName() {
 		return merchatName;

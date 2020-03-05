@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.framework.shiro.service.SysPasswordService;
 import com.ruoyi.framework.util.ShiroUtils;
 import com.ruoyi.system.domain.AgentUser;
+import com.ruoyi.system.domain.SysUser;
 import com.ruoyi.system.service.AgentUserService;
+import com.ruoyi.system.service.ISysUserService;
 
 /**
  * 蜻蜓设备代理商类
@@ -37,6 +41,13 @@ public class SysAgentUserController extends BaseController
 
     @Autowired
     private AgentUserService agentUserService;
+    
+    @Autowired
+    private ISysUserService userService;
+    
+    @Autowired
+    private SysPasswordService passwordService;
+   
 
     @RequiresPermissions("system:agentUser:view")
     @GetMapping()
@@ -54,6 +65,7 @@ public class SysAgentUserController extends BaseController
     public TableDataInfo list(AgentUser agentUser)
     {
         startPage();
+        agentUser.setCreateBy(ShiroUtils.getLoginName());
         List<AgentUser> list = agentUserService.selectAgentUserList(agentUser);
         return getDataTable(list);
     }
@@ -76,9 +88,30 @@ public class SysAgentUserController extends BaseController
     @ResponseBody
     public AjaxResult addSave(AgentUser agentUser)
     {
-    	agentUser.setCreateTime(new Date());
-    	agentUser.setCreateBy(ShiroUtils.getLoginName());
-        return toAjax(agentUserService.insertAg(agentUser));
+    	
+    	if (UserConstants.USER_NAME_NOT_UNIQUE.equals(userService.checkLoginNameUnique(agentUser.getPhone())))
+        {
+            return error("新增用户'" + agentUser.getPhone() + "'失败，登录账号已存在");
+        }else {
+        	SysUser user = new SysUser();
+        	
+        	user.setSalt(ShiroUtils.randomSalt());
+        	user.setLoginName(agentUser.getPhone());
+        	user.setUserName(agentUser.getPhone());
+        	user.setCreateBy(ShiroUtils.getLoginName());
+        	user.setCreateTime(new Date());
+        	user.setPassword(passwordService.encryptPassword(agentUser.getPhone(), "123456", user.getSalt()));
+        	user.setPhonenumber(agentUser.getPhone());
+        	Long[] roleIds = new Long[1];
+        	roleIds[0]=Long.valueOf(3);
+        	user.setRoleIds(roleIds);
+        	userService.insertUser(user);
+        	
+        	agentUser.setCreateTime(new Date());
+        	agentUser.setCreateBy(ShiroUtils.getLoginName());
+        	agentUser.setUserId(user.getUserId().intValue());
+            return toAjax(agentUserService.insertAg(agentUser));
+        }
     }
     
     

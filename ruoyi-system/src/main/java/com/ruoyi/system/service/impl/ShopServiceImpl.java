@@ -22,10 +22,10 @@ public class ShopServiceImpl implements ShopService
     private ShopMapper shopMapper;
 
 	@Override
-	public Shop selectShopBydeviceId(Long deviceId) {
+	public Shop selectShopBydeviceId(String deviceId) {
 		
 		ShopExample example = new ShopExample();
-		example.createCriteria().andDeviceIdEqualTo(String.valueOf(deviceId));
+		example.createCriteria().andDeviceIdEqualTo(deviceId);
 		
 		List<Shop> shopList = shopMapper.selectByExample(example);
 		return shopList.get(0);
@@ -54,7 +54,7 @@ public class ShopServiceImpl implements ShopService
 
 	@Override
 	public int updateShop(Shop shop) {
-		return shopMapper.updateByPrimaryKey(shop);
+		return shopMapper.updateByPrimaryKeySelective(shop);
 	}
 
 	@Override
