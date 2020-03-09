@@ -39,14 +39,15 @@
 .add:hover {
   color: blue;
 }
+</style>
 	<body>
 		<div class="main-content">
-			<form  class="wizard-big" id="form-user-edit" th:object="${merchant}">
-				<input name="id" type="hidden" th:field="*{id}" />
+			<form  class="wizard-big" id="form" th:object="${merchant}">
+				<input name="id" id="id" type="hidden" th:field="*{id}" />
 				<h1>商户基本信息</h1>
 								<fieldset>
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label>商户名称 *</label>
 												<input id="merchantName" name="merchantName" th:field="*{merchantName}" type="text" class="form-control required">
@@ -57,7 +58,7 @@
 											</div>
 											
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 										    <div class="form-group">
 											    <label>经营类目 *</label>
 												<select id="businessCategory" name="businessCategory"class="form-control m-b">
@@ -75,7 +76,7 @@
 								<h1>结算信息</h1>
 								<fieldset>
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label>联系人 *</label>
 												<input id="contacts" name="contacts" th:field="*{contacts}" type="text"class="form-control required">
@@ -89,7 +90,7 @@
 												<input id="email" name="email" th:field="*{email}" type="text"class="form-control required">
 											</div> 
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-3">
 											<div class="form-group">
 												<label>收款银行 *</label>
 												<input id="receivingBank" name="receivingBank" th:field="*{receivingBank}" type="text"class="form-control required">
@@ -101,6 +102,17 @@
 											<div class="form-group">
 												<label>银行账号 *</label>
 												<input id="cardNumber" name="cardNumber" th:field="*{cardNumber}" type="text"class="form-control required">
+											</div>
+										</div>
+										
+										<div class="col-sm-3">
+											<div class="form-group">
+												<label>商户appid *</label>
+												<input id="appid" name="appid" th:field="*{appid}" type="text"class="form-control required">
+											</div>
+											<div class="form-group">
+												<label>商户支付宝账号 *</label>
+												<input id="aliAccount" name="aliAccount" th:field="*{aliAccount}" type="text"class="form-control required">
 											</div>
 										</div>
 									</div>
@@ -117,6 +129,7 @@
 													<div style="display:none;">
 														<span class="btn btn-white btn-file">
 															<input id="businessLicenseImage" name="businessLicenseImage" type="file">
+															
 														</span>
 													</div>
 												</div>
@@ -161,42 +174,121 @@
 												</div>
 											</div>
 										</div>
+										
+										<div class="row">
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+												<label>商店门头照 *</label>
+													<div class="fileinput-preview thumbnail add" data-trigger="fileinput" ></div>
+													<div style="display:none;">
+														<span class="btn btn-white btn-file">
+															<input id="shopImageUrl" name="shopImageUrl" type="file">
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="form-group">
+											<label>经营资质照片 *</label>
+												<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput-preview thumbnail add" data-trigger="fileinput"></div>
+													<div style="display:none;">
+														<span class="btn btn-white btn-file">
+															<input id="qualificationsImageUrl" name="qualificationsImageUrl" type="file">
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</fieldset>
 				</div>
 			</form>
 		</div>
-		<div class="row">
-			<div class="col-sm-offset-5 col-sm-10">
-				<button type="button" class="btn btn-sm btn-primary"
-					onclick="submitHandler()">
-					<i class="fa fa-check"></i>
-					保 存
-				</button>&nbsp;
-				<button type="button" class="btn btn-sm btn-danger"
-					onclick="closeItem()">
-					<i class="fa fa-reply-all"></i>
-					关 闭
-				</button>
-			</div>
-		</div>
 		<th:block th:include="include :: footer" />
 		<th:block th:include="include :: jquery-steps-js" />
 		<th:block th:include="include :: jasny-bootstrap-js" />
 		<script type="text/javascript">
-			var prefix = ctx + "system/merchant";
-			function
-			submitHandler() {
-			if ($.validate.form()) {
-			var data =
-			$("#form-user-edit").serializeArray();
-			var isEffective =
-			$("input[id='isEffective']").is(':checked') == true ?
-			0 : 1;
-			data.push({"name": "isEffective", "value": isEffective});
-			$.operate.saveTab(prefix + "/edit", data);
+			
+		    var prefix = ctx + "system/merchant";
+		    
+			$(document).ready(function () {
+			$("#wizard").steps();
+			$("#form").steps({
+			bodyTag: "fieldset", onStepChanging: function (event, currentIndex, newIndex)
+			{
+			if (currentIndex > newIndex) {
+			return true
 			}
+			if (newIndex === 3 && Number($("#age").val()) < 18) {
+			return false
 			}
+			var form = $(this);
+			if (currentIndex < newIndex) {
+			$(".body:eq(" + newIndex + ") label.error", form).remove();
+			$(".body:eq(" + newIndex + ") .error", form).removeClass("error")
+			}
+			form.validate().settings.ignore = ":disabled,:hidden";
+			return form.valid()
+			}, onStepChanged: function (event, currentIndex, priorIndex) {
+			if (currentIndex === 2 && Number($("#age").val()) >= 18) {
+			$(this).steps("next")
+			}
+			if (currentIndex === 2 && priorIndex === 3) {
+			$(this).steps("previous")
+			}
+			}, onFinishing: function (event, currentIndex) {
+			var form = $(this);
+			form.validate().settings.ignore = ":disabled";
+			return form.valid()
+			}, onFinished: function (event, currentIndex) {
+			
+			var formData = new FormData();
+			if ($('#businessLicenseImage')[0].files[0] == null) {
+			$.modal.alertWarning("请先选择文件路径");
+			return false;
+			}
+			formData.append('files', $('#businessLicenseImage')[0].files[0]);
+			formData.append('files', $('#organizationImage')[0].files[0]);
+			formData.append('files', $('#idcardPositiveImage')[0].files[0]);
+			formData.append('files', $('#idcardOthersideImage')[0].files[0]);
+			formData.append('files', $('#shopImageUrl')[0].files[0]);
+			formData.append('files', $('#qualificationsImageUrl')[0].files[0]);
+			formData.append('merchantName', $("#merchantName").val());
+			formData.append('address', $("#address").val());
+			formData.append('businessCategory', $("#businessCategory").val());
+			formData.append('mobile', $("#mobile").val());
+			formData.append('contacts', $("#contacts").val());
+			formData.append('phone', $("#phone").val());
+			formData.append('email', $("#email").val());
+			formData.append('receivingBank', $("#receivingBank").val());
+			formData.append('cardholder', $("#cardholder").val());
+			formData.append('cardNumber', $("#cardNumber").val());
+			formData.append('id', $("#id").val());
+			
+			formData.append('appid', $("#appid").val());
+			formData.append('aliAccount', $("#aliAccount").val());
+			$.ajax({
+			url: prefix + "/edit",
+			type: 'post',
+			cache: false,
+			data: formData,
+			processData: false,
+			contentType: false,
+			dataType: "json",
+			success: function(result) {
+			$.operate.successCallback(result);
+			}
+			});
+			}
+			}).validate({
+			errorPlacement: function (error, element) {
+			element.before(error)
+			}, rules: {confirm: {equalTo: "#password"}}
+			})
+			});
 		</script>
 	</body>
 </html>

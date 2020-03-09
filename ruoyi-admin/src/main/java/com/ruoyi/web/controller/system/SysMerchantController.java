@@ -276,12 +276,44 @@ public class SysMerchantController extends BaseController {
 
 	/**
 	 * 修改保存商户
+	 * @throws Exception 
 	 */
 	@RequiresPermissions("system:merchant:edit")
 	@Log(title = "商户管理", businessType = BusinessType.UPDATE)
 	@PostMapping("/edit")
 	@ResponseBody
-	public AjaxResult editSave(@Validated Merchant merchant) {
+	public AjaxResult editSave(@Validated Merchant merchant, @RequestParam("files") MultipartFile[] files) throws Exception {
+		
+        if (files.length != 0) {
+        	if(files[0].isEmpty()==false) {
+			String businessLicenseUrl = ossClient.getImgUrl(ossClient.uploadImg2Oss(files[0]));
+			merchant.setBusinessLicenseUrl(businessLicenseUrl);
+        	}
+			if(files[1].isEmpty()==false) {
+				String organizationUrl = ossClient.getImgUrl(ossClient.uploadImg2Oss(files[1]));
+				merchant.setOrganizationUrl(organizationUrl);
+			}
+			
+			if(files[2].isEmpty()==false) {
+			String idcardPositiveUrl = ossClient.getImgUrl(ossClient.uploadImg2Oss(files[2]));
+			merchant.setIdcardPositiveUrl(idcardPositiveUrl);
+			}
+			
+			if(files[3].isEmpty()==false) {
+			String idcardOthersideUrl = ossClient.getImgUrl(ossClient.uploadImg2Oss(files[3]));
+			merchant.setIdcardOthersideUrl(idcardOthersideUrl);
+			}
+			
+			if(files[4].isEmpty()==false) {
+			String shopImageUrl = ossClient.getImgUrl(ossClient.uploadImg2Oss(files[4]));
+			merchant.setShopImageUrl(shopImageUrl);
+			}
+			
+			if(files[5].isEmpty()==false) {
+			String qualificationsImageUrl = ossClient.getImgUrl(ossClient.uploadImg2Oss(files[5]));
+			merchant.setQualificationsImageUrl(qualificationsImageUrl);
+			}
+		}
 		merchant.setUpdateBy(ShiroUtils.getLoginName());
 		return toAjax(merchantService.updateMerchant(merchant));
 	}
