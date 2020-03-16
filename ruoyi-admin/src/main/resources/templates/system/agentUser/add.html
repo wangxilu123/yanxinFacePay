@@ -13,7 +13,7 @@
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">代理商名称：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="agentName" placeholder="请输入代理商名称"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
@@ -21,81 +21,111 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label class="col-sm-3 control-label">是否签约：</label>
-							<div class="col-sm-8">
-								<select id="isSigning" name="isSigning"class="form-control m-b">
-									<option value="1">已签约</option>
-									<option value="0">未签约</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">分润结算比例：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="separateProportion" placeholder="请输入分润结算比例"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">联系人名称：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="contacts" placeholder="请输入联系人名称"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">联系人电话：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="phone" placeholder="请输入联系人电话"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
 					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label is-required">省：</label>
+							<div class="col-sm-6">
+								<select id="prov" onchange="showCity(this)" class="form-control m-b" >
+				                <option>=请选择省份=</option>
+				                </select>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label is-required">市：</label>
+							<div class="col-sm-6">
+								<select id="city"  onchange="showCountry(this)" class="form-control m-b" >
+				                <option>=请选择城市=</option>
+				                </select>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label is-required">县：</label>
+							<div class="col-sm-6">
+								<select id="country" onchange="selectCountry(this)" class="form-control m-b" >
+				                <option>=请选择区县=</option>
+				                </select>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-4 control-label is-required">详细地址：</label>
+							<div class="col-sm-6">
+								<input name="address" placeholder="请输入详细地址" class="form-control" type="text" maxlength="30" required>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">提现银行：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="withdrawalBank" placeholder="请输入提现银行"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">持卡人：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="cardholder" placeholder="请输入持卡人"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">银行卡号：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="cardNumber" placeholder="请输入银行卡号"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="row">
+					
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label class="col-sm-4 control-label is-required">身份证号：</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<input name="idNumber" placeholder="请输入身份证号"
 									class="form-control" type="text" maxlength="30" required>
 							</div>
@@ -121,12 +151,100 @@
 		</div>
 		<th:block th:include="include :: footer" />
 		<th:block th:include="include :: jasny-bootstrap-js" />
+		<th:block th:include="include :: bootstrap-city-js" />
 		<script>
-			var prefix = ctx + "system/agentUser";
+		$(function () {
+		  var current_prov;
+		  var current_city;
+		  var current_country;
+		     /* 自动加载省份列表 */
+		     showPro();
+		 });
+		  function showPro(){
+		  $(".btn").disabled = true;
+		  var len = province.length; 
+		  for(var i = 0; i < len; i++) {
+		   var provOpt = document.createElement("option");
+		   provOpt.innerText = province[i]['name'];
+		   provOpt.value = i;
+		      prov.appendChild(provOpt);
+		  }
+		  };
+		  /*根据所选的省份来显示城市列表*/
+		  function showCity(obj) {
+		    var val = obj.options[obj.selectedIndex].value;
+		    current_prov = val;
+		    if (val >=0) {
+		      city.style.display = 'inline-block';
+		      country.style.display = 'none';
+		    } else {
+		      city.style.display = 'none';
+		      country.style.display = 'none';
+		    }
+		 if (val != null) {
+		      city.length = 1;
+		      if (province[val]) {
+		        var cityLen = province[val]["city"].length;
+		      }
+		      for (var j = 0; j < cityLen; j++) {
+		        var cityOpt = document.createElement('option');
+		        cityOpt.innerText = province[val]["city"][j].name;
+		        cityOpt.value = j;
+		        city.appendChild(cityOpt);
+		      }
+		    }
+		  };
+		  /*根据所选的城市来显示县区列表*/
+		  function showCountry(obj) {
+		    var val = obj.options[obj.selectedIndex].value;
+		    if (val >=0) {
+		      country.style.display = 'inline-block';
+		    } else {
+		      country.style.display = 'none';
+		    }
+		    current_city = val;
+		    if (val != null) {
+		      country.length = 1; 
+		      if (province[current_prov]["city"][val]) {
+		        var countryLen = province[current_prov]["city"][val].districtAndCounty.length;
+		      }
+		      if(countryLen == 0){
+		        addrShow.value = province[current_prov].name + '-' + province[current_prov]["city"][val].name;
+		        return;
+		      }
+		      for (var n = 0; n < countryLen; n++) {
+		        var countryOpt = document.createElement('option');
+		        countryOpt.innerText = province[current_prov]["city"][val].districtAndCounty[n];
+		        countryOpt.value = n;
+		        country.appendChild(countryOpt);
+		      }
+		    }
+		  };
+		  
+		  function selectCountry(obj) {
+		   current_country = obj.options[obj.selectedIndex].value;
+		   $(".btn").disabled = false;
+		  
+		  };
+		  function showAddr() {
+		    var ss = province[current_prov].name + "|" + 
+		     		 province[current_prov]['city'][current_city].name + "|" + 
+		      		  province[current_prov]['city'][current_city]['districtAndCounty'][current_country];
+		   $("#addr-show").val(ss);
+		  }
+		
+	    var prefix = ctx + "system/agentUser";
 
 		function submitHandler() {
+			  var pro = province[current_prov].name;
+			  var city = province[current_prov]['city'][current_city].name;
+			  var country = province[current_prov]['city'][current_city]['districtAndCounty'][current_country];
 	        if ($.validate.form()) {
 	        	var data = $("#form-ag-add").serializeArray();
+
+                data.push({"name": "province", "value": pro});
+                data.push({"name": "city", "value": city});
+                data.push({"name": "county", "value": country});
 	        	$.operate.saveTab(prefix + "/add", data);
 	        }
 	    }
